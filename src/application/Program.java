@@ -22,6 +22,12 @@ public class Program {
 			System.out.println("Employee #" + i + ":");
 			System.out.print("Id: ");
 			int id = input.nextInt();
+			while (hasId(list, id)) {
+				System.out.println("Id already taken! Try again: ");
+				System.out.print("Id: ");
+				id = input.nextInt();
+			}
+
 			System.out.print("Name: ");
 			input.nextLine();
 			String name = input.nextLine();
@@ -30,13 +36,13 @@ public class Program {
 			Employee emp = new Employee(id, name, salary);
 			list.add(emp);
 		}
-
+				
 		System.out.println();
 		System.out.print("Enter the employee id that will have salary increase: ");
 		int idsalary = input.nextInt();
-		
+
 		Employee emp = list.stream().filter(x -> x.getId() == idsalary).findFirst().orElse(null);
-		
+
 		if (emp == null) {
 			System.out.println("This id does not exist!");
 		} else {
@@ -53,5 +59,10 @@ public class Program {
 
 		input.close();
 
+	}
+
+	public static boolean hasId(List<Employee> list, int id) {
+		Employee emp = list.stream().filter(x -> x.getId() == id).findFirst().orElse(null);
+		return emp != null;
 	}
 }
